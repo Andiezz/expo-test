@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "app/(auth)/_layout.jsx", "app/(auth)/sign-in.jsx", "app/(auth)/sign-up.jsx", "app/(tabs)/_layout.jsx", "app/(tabs)/bookmark.jsx", "app/(tabs)/create.jsx", "app/(tabs)/home.jsx", "app/(tabs)/profile.jsx", "app/search/[query].jsx", "app/_layout.jsx", "app/index.jsx", "components/CustomButton.jsx", "components/EmptyState.jsx", "components/FormField.jsx", "components/index.js", "components/InfoBox.jsx", "components/Loader.jsx", "components/SearchInput.jsx", "components/Trending.jsx", "components/VideoCard.jsx", "constants/icons.js", "constants/images.js", "constants/index.js", "context/GlobalProvider.jsx", "hooks/useColorScheme.js", "hooks/useColorScheme.web.js", "hooks/useThemeColor.js", "lib/appwrite.js", "lib/useAppwrite.js"  ]
 }
