@@ -1,17 +1,54 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
     "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
+    "declarations.d.ts",
+    "src/**/*",
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "app/(auth)/_layout.jsx", "app/(auth)/sign-in.jsx", "app/(auth)/sign-up.jsx", "app/(tabs)/_layout.jsx", "app/(tabs)/bookmark.jsx", "app/(tabs)/create.jsx", "app/(tabs)/home.jsx", "app/(tabs)/profile.jsx", "app/search/[query].jsx", "app/_layout.jsx", "app/index.jsx", "components/CustomButton.jsx", "components/EmptyState.jsx", "components/FormField.jsx", "components/index.js", "components/InfoBox.jsx", "components/Loader.jsx", "components/SearchInput.jsx", "components/Trending.jsx", "components/VideoCard.jsx", "constants/icons.js", "constants/images.js", "constants/index.js", "context/GlobalProvider.jsx", "hooks/useColorScheme.js", "hooks/useColorScheme.web.js", "hooks/useThemeColor.js", "lib/appwrite.js", "lib/useAppwrite.js"  ]
+    "expo-env.d.ts",
+    "app/(auth)/_layout.tsx",
+    "app/(auth)/sign-in.tsx",
+    "app/(auth)/sign-up.tsx",
+    "app/(tabs)/_layout.tsx",
+    "app/(tabs)/index.tsx",
+    "app/(tabs)/(thing)/thing/[id].tsx",
+    "app/(tabs)/detail.tsx",
+    "app/(tabs)/create.jsx",
+    "app/(tabs)/home.jsx",
+    "app/(tabs)/profile.tsx",
+    "app/search/[query].jsx",
+    "app/_layout.jsx",
+    "app/index.jsx",
+    "components/CustomButton.jsx",
+    "components/EmptyState.jsx",
+    "components/FormField.jsx",
+    "components/index.js",
+    "components/InfoBox.jsx",
+    "components/Loader.jsx",
+    "components/SearchInput.jsx",
+    "components/Trending.jsx",
+    "components/VideoCard.jsx",
+    "constants/icons.ts",
+    "constants/images.ts",
+    "constants/index.ts",
+    "context/GlobalProvider.jsx",
+    "hooks/useColorScheme.js",
+    "hooks/useColorScheme.web.js",
+    "hooks/useThemeColor.js",
+    "lib/appwrite.js",
+    "lib/useAppwrite.js",
+  ]
 }
