@@ -14,8 +14,41 @@ const ThingLayout = () => {
   return (
     <>
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="thing/[id]" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Thing Center",
+            headerTitleStyle: { color: "white" },
+            headerStyle: { backgroundColor: "#161622" },
+          }}
+        />
+        <Stack.Screen
+          name="thing/[id]"
+          options={{
+            title: "Thing Detail",
+            headerTitleStyle: { color: "white" },
+            headerTintColor: 'white',
+            headerStyle: { backgroundColor: "#161622" },
+          }}
+        />
+        <Stack.Screen
+          name="update-thing/[id]"
+          options={{
+            title: "Update Thing",
+            headerTitleStyle: { color: "white" },
+            headerTintColor: 'white',
+            headerStyle: { backgroundColor: "#161622" },
+          }}
+        />
+        <Stack.Screen
+          name="update-param"
+          options={{
+            title: "Update Parameter",
+            headerTitleStyle: { color: "white" },
+            headerTintColor: 'white',
+            headerStyle: { backgroundColor: "#161622" },
+          }}
+        />
       </Stack>
     </>
   );

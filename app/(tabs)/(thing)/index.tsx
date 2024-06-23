@@ -36,7 +36,6 @@ const Thing = () => {
   }, [pageSize, pageNumber, keyword, status, userId]);
   return (
     <SafeAreaView style={styles.container}>
-      <AppText style={styles.title}>Thing Center</AppText>
       <PaperProvider>
         <View style={styles.tableContainer}>
           <View style={styles.tableWrapper}>
@@ -69,7 +68,6 @@ const Thing = () => {
                           pathname: "/thing/[id]",
                           params: { id: `${item._id}` },
                         }}
-                        asChild
                       >
                         <DataTable.Row style={styles.tableRow}>
                           <DataTable.Cell style={styles.cell}>
@@ -80,7 +78,7 @@ const Thing = () => {
                                     ? "#55adff"
                                     : item.status === STATUS.INACTIVE
                                     ? "#bababa"
-                                    : "#fff36b",
+                                    : "#ffd23d",
                                 borderRadius: 20,
                                 paddingLeft: 10,
                                 paddingRight: 10,
@@ -190,17 +188,13 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 8, // Adjust padding as needed
     minWidth: 100, // Minimum width for cells to prevent content truncation
-    flex: 1,
   },
   tableRow: {
     backgroundColor: "white", // Background for each row
   },
   cell: {
     paddingHorizontal: 8, // Adjust padding as needed
-    minWidth: 100, // Minimum width for cells to prevent content truncation
-    flex: 1,
-    flexWrap: "wrap",
+    width: 200, // Minimum width for cells to prevent content truncation
   },
-  badge: {},
 });
 export default Thing;

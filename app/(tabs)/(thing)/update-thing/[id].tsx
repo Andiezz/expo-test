@@ -6,8 +6,9 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Card, Text, Button, Avatar, Divider } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Device from "./device";
 
-const ThingDetail = () => {
+const UpdateThing = () => {
   const { id } = useLocalSearchParams();
   const [thing, setThing] = useState<IThingItem>();
   const [owner, setOwner] = useState<IManager>();
@@ -28,8 +29,6 @@ const ThingDetail = () => {
 
   useEffect(() => {
     getThingDetail();
-
-    setOwner(owner);
   }, [id]);
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const ThingDetail = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Card>
+        <Card style={{ position: "relative" }}>
           <Card.Title
             title={thing?.name}
             titleStyle={{ fontSize: 20, fontWeight: "bold" }}
@@ -110,47 +109,12 @@ const ThingDetail = () => {
           <Card style={styles.card} mode="contained">
             <Card.Content>
               <div style={styles.locaionContainer}>
-                {thing?.devices.map((item) => (
-                  <Card mode="outlined" key={item._id}>
-                    <Card.Content>
-                      <div style={styles.device}>
-                        <Text
-                          style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            width: "50%",
-                          }}
-                        >
-                          {item.name}
-                        </Text>
-                        <div
-                          style={{
-                            backgroundColor:
-                              item?.status === STATUS.ACTIVE
-                                ? "#7eff68"
-                                : item?.status === STATUS.INACTIVE
-                                ? "#bababa"
-                                : "#55adff",
-                            borderRadius: 20,
-                            paddingLeft: 10,
-                            paddingRight: 10,
-                            alignItems: "center",
-                          }}
-                        >
-                          {item?.status}
-                        </div>
-                      </div>
-                    </Card.Content>
-                  </Card>
+                {thing?.devices.map((item, index) => (
+                  <Device key={item._id} device={item} thingId={thing._id || ""} deviceIndex={index}/>
                 ))}
               </div>
             </Card.Content>
           </Card>
-          <Card.Actions>
-            <Button onPress={() => router.push(`/update-thing/${id}`)}>
-              Update
-            </Button>
-          </Card.Actions>
         </Card>
       </ScrollView>
     </SafeAreaView>
@@ -205,4 +169,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ThingDetail;
+export default UpdateThing;

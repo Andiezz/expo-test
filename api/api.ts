@@ -1,5 +1,7 @@
 import {
   CreateNewPasswordInputModel,
+  IThingItem,
+  ResponseDTO,
   ThingResponseModel,
   UserLoginInputModel,
   UserLoginResponseModel,
@@ -37,9 +39,16 @@ export const getThingListAPI = async (
   pageSize: number,
   pageNumber: number,
   keyword: string,
-  userId: string,
+  userId: string
 ) =>
   Axios.get<ThingResponseModel>(
     `/api/thing?limit=${pageSize}&page=${pageNumber}&q=${keyword}&userId=${userId}`
   );
+
+export const getThingDetailAPI = async (thingId: string) =>
+  Axios.get<IThingItem>(`/api/thing/${thingId}`);
+
+export const updateThingDetailAPI = async (thingId: string, data: IThingItem) =>
+  Axios.put(`/api/thing/${thingId}`, data);
+
 //#endregion

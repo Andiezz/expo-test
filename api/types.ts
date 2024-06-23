@@ -1,5 +1,12 @@
 import { STATUS } from "@/constants/constant";
 
+export abstract class ResponseDTO<T> {
+  public readonly responseCode?: string;
+  public readonly timestamp?: string;
+  public readonly message?: string;
+  public abstract readonly data: T | undefined;
+}
+
 //#region Authentication
 export interface UserLoginInputModel {
   email: string;
@@ -79,10 +86,10 @@ export interface IParameterStandardModel {
 
 export interface ResponseDeviceModelDTO {
   _id: string;
-  name: string;
-  information: string;
-  type: string;
-  parameterStandards: IParameterStandardModel[];
+  name?: string;
+  information?: string;
+  type?: string;
+  parameterStandards?: IParameterStandardModel[];
 }
 
 export interface IDevice {
@@ -105,6 +112,28 @@ export interface IThingItem {
   managers: IManager[];
   certificate: ICertificate;
   devices: IDevice[];
+}
+
+export interface IDeviceUpdate {
+  _id: string;
+  name: string;
+  status?: STATUS;
+  model: string;
+  parameterStandards: IParameterStandardModel[];
+  parameterStandardDefault: boolean;
+}
+
+export interface IThingItemUpdate {
+  _id?: string;
+  createdOn?: string;
+  updatedOn?: string;
+  name: string;
+  information: string;
+  location: ILocation;
+  status: STATUS;
+  managers: IManager[];
+  certificate: ICertificate;
+  devices: IDeviceUpdate[];
 }
 
 export interface ThingResponseModel {
