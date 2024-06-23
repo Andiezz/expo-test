@@ -145,3 +145,114 @@ export interface ThingResponseModel {
 }
 
 //#endregion
+
+//#region Dashboard
+
+export enum TypeFilterDate {
+  day = 'day',
+  week = 'week',
+  month = 'month',
+  year = 'year',
+  total = 'total'
+}
+
+export interface IChart {
+  'pm2.5'?: number;
+  pm10?: number;
+  temperature?: number;
+  humidity?: number;
+  lpg?: number;
+  ch4?: number;
+  co?: number;
+  alcohol?: number;
+  co2?: number;
+  toluen?: number;
+  nh4?: number;
+  aceton?: number;
+  tvoc?: number;
+  chartType?: TypeFilterDate;
+  _id?: string;
+  time?: string;
+}
+
+export interface IEvaluatedParameter {
+  name: string;
+  value: number;
+  unit: string;
+  weight: number;
+  threshold: {
+    name: string;
+    color: string;
+    min: number;
+    max: number;
+  };
+  type: string;
+  iaqiValue?: number;
+}
+
+export interface IGeneralIaqiReport {
+  generalIaqi: number;
+}
+
+export interface IAQResult {
+  generalIaqiReport: IGeneralIaqiReport;
+  acceptableSubstances: IEvaluatedParameter[];
+  unAcceptableSubstances: IEvaluatedParameter[];
+}
+
+export interface ITimeseriesData {
+  'pm2.5'?: number;
+  pm10?: number;
+  temperature?: number;
+  humidity?: number;
+  lpg?: number;
+  ch4?: number;
+  co?: number;
+  alcohol?: number;
+  co2?: number;
+  toluen?: number;
+  nh4?: number;
+  aceton?: number;
+  tvoc?: number;
+}
+
+export interface IQualityReport {
+  iaqResult: IAQResult;
+  timeseriesData: ITimeseriesData[];
+}
+
+export interface IOverviewThing {
+  thingDetail: IThingItem;
+  timeseriesData?: IChart[];
+  thingWarning?: any;
+  qualityReport?: IQualityReport;
+}
+
+//#endregion
+
+//#region Notification
+
+export interface IReceiver {
+  userId: string;
+  readAt: Date | null;
+}
+
+export interface INotification {
+  _id: string;
+  createdOn: Date;
+  title: string;
+  content: string;
+  type: string;
+  receivers: IReceiver[];
+  readAt: Date | null;
+}
+
+export interface ResponseNotification {
+  paginatedResults: Array<INotification>;
+  page: number;
+  limit: number;
+  total: number;
+  totalUnread: number;
+}
+
+//#endregion

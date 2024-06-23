@@ -1,7 +1,9 @@
 import {
   CreateNewPasswordInputModel,
+  IOverviewThing,
   IThingItem,
   ResponseDTO,
+  ResponseNotification,
   ThingResponseModel,
   UserLoginInputModel,
   UserLoginResponseModel,
@@ -35,10 +37,11 @@ export const getUserInfoAPI = async () =>
 //#endregion
 
 //#region Thing
+
 export const getThingListAPI = async (
-  pageSize: number,
-  pageNumber: number,
-  keyword: string,
+  pageSize = 10,
+  pageNumber = 1,
+  keyword = "",
   userId: string
 ) =>
   Axios.get<ThingResponseModel>(
@@ -50,5 +53,21 @@ export const getThingDetailAPI = async (thingId: string) =>
 
 export const updateThingDetailAPI = async (thingId: string, data: IThingItem) =>
   Axios.put(`/api/thing/${thingId}`, data);
+
+//#endregion
+
+//#region Dashboard
+
+export const getDashboardThingAPI = async (thingId: string) =>
+  Axios.get<IOverviewThing>(`/api/dashboard/thing/${thingId}`);
+
+//#endregion
+
+//#region Notification
+
+export const getNotificationAPI = async (page: number, limit: number) =>
+  Axios.get<ResponseNotification>(
+    `/api/notification/view?page=${page}&limit=${limit}`
+  );
 
 //#endregion

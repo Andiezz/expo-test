@@ -22,10 +22,6 @@ import { useFocusEffect } from "@react-navigation/native";
 
 const Profile = () => {
   const [user, setUser] = useState<UserResponseModel>();
-  const logout = async () => {
-    dispatch(logoutAC());
-    router.replace("/sign-in");
-  };
 
   const getUserInfo = async () => {
     const res = await getUserInfoAPI();
@@ -40,14 +36,6 @@ const Profile = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
-        <TouchableOpacity onPress={logout} style={styles.logoutContainer}>
-          <Image
-            source={icons.logout}
-            resizeMode="contain"
-            style={styles.iconLogout}
-          />
-        </TouchableOpacity>
-
         <View style={styles.avatarContainer}>
           {user?.avatar ? (
             <Image

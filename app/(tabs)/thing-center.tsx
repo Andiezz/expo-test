@@ -18,6 +18,7 @@ import {
 import { textStyles } from "@/assets/styles";
 import { icons } from "@/constants";
 import { Link, router, Stack } from "expo-router";
+import moment from "moment";
 
 const Thing = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -33,7 +34,7 @@ const Thing = () => {
   };
   useEffect(() => {
     getThingList();
-  }, [pageSize, pageNumber, keyword, status, userId]);
+  }, [pageSize, pageNumber, keyword, userId]);
   return (
     <SafeAreaView style={styles.container}>
       <PaperProvider>
@@ -130,7 +131,9 @@ const Thing = () => {
                             {item.devices.map((item) => item.name).join(", ")}
                           </DataTable.Cell>
                           <DataTable.Cell style={styles.cell}>
-                            {item.createdOn}
+                            {moment(item.createdOn).format(
+                              " hh:mm:ss MMMM DD, YYYY"
+                            )}
                           </DataTable.Cell>
                         </DataTable.Row>
                       </Link>
@@ -170,7 +173,7 @@ const styles = StyleSheet.create({
   },
   tableContainer: {
     justifyContent: "center",
-    padding: 16,
+    paddingTop: 16,
     borderRadius: 10,
     width: "auto",
   },

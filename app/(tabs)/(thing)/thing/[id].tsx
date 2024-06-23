@@ -28,8 +28,6 @@ const ThingDetail = () => {
 
   useEffect(() => {
     getThingDetail();
-
-    setOwner(owner);
   }, [id]);
 
   useEffect(() => {
