@@ -10,7 +10,7 @@ import {
 
 import { images } from "../../constants";
 import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
-import socket from "@/utility/socket";
+import SocketService from "@/utility/socket";
 import SpeedometerChart from "@/components/Chart/SpeedometerChart";
 import { Card, Divider, Text } from "react-native-paper";
 import { getDashboardThingAPI, getThingListAPI } from "@/api/api";
@@ -18,10 +18,17 @@ import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { ThingResponseModel } from "@/api/types";
 import { router } from "expo-router";
+import { Storage, STORAGE_KEYS } from "@/utility/storage";
+
+interface Message {
+  thingId: string;
+}
 
 const Home = () => {
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<Message | null>(null);
+  console.log("🚀 ~ Home ~ message:", message);
   const [thingList, setThingList] = useState<ThingResponseModel>();
+
   const userId = useSelector((state: RootState) => state.auth.userId);
   const getThingList = async () => {
     if (userId) {
@@ -34,21 +41,23 @@ const Home = () => {
   }, [userId]);
 
   useEffect(() => {
-    // Listen for socket events
-    socket.on("connect", () => {
-      console.log("Connected to socket server");
-    });
+    const connectSocket = async () => {
+      const token: any = await Storage.getItem(STORAGE_KEYS.token);
+      if (token) {
+        SocketService.connect(token.token);
+      }
 
-    socket.on("message", (data: string) => {
-      console.log("🚀 ~ socket.on ~ data:", data);
-      setMessage(data);
-    });
+      SocketService.onMessage("notification", (data: Message) => {
+        console.log("🚀 ~ SocketService.onMessage ~ data:", data);
+        setMessage(data);
+      });
 
-    // Cleanup on unmount
-    return () => {
-      socket.off("connect");
-      socket.off("message");
+      // Clean up the connection on unmount
+      return () => {
+        SocketService.disconnect();
+      };
     };
+    connectSocket();
   }, []);
 
   return (
@@ -69,7 +78,11 @@ const Home = () => {
         />
         <Card.Content style={styles.thingWrapper}>
           {thingList?.paginatedResults?.map((item) => (
-            <Card key={item._id} mode="outlined" onPress={()=>router.push(`/home/${item._id}`)}>
+            <Card
+              key={item._id}
+              mode="outlined"
+              onPress={() => router.push(`/home/${item._id}`)}
+            >
               <Card.Content style={styles.thingContent}>
                 <View style={styles.thingTitle}>
                   <Text>
@@ -80,6 +93,11 @@ const Home = () => {
             </Card>
           ))}
         </Card.Content>
+        {/* <Card.Content>
+          <Text>
+            {message.toString()}
+          </Text>
+        </Card.Content> */}
       </Card>
     </SafeAreaView>
   );
@@ -109,8 +127,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#4095e5",
     padding: 5,
     borderRadius: 5,
-    width: "90%"
-  }
+    width: "90%",
+  },
 });
 
 export default Home;

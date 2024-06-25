@@ -1,10 +1,44 @@
-// socket.ts
-import { io, Socket } from 'socket.io-client';
+import { io, Socket } from "socket.io-client";
 
-const SOCKET_URL = 'http://localhost:8081/'; // replace with your server URL
+const SOCKET_URL = "http://localhost:8888";
 
-const socket: Socket = io(SOCKET_URL, {
-  transports: ['websocket'], // specify the transport method
-});
+class SocketService {
+  private socket: Socket | null = null;
+  connect(token: string) {
+    this.socket = io(SOCKET_URL, {
+      retries: 1,
+      timeout: 6000,
+      auth: {
+        Authorization: token ? 'Bearer ' + token : ''
+      },
+    });
 
-export default socket;
+    this.socket.on("connect", () => {
+      console.log("Connected to socket server");
+    });
+
+    this.socket.on("disconnect", () => {
+      console.log("Disconnected from socket server");
+    });
+  }
+
+  disconnect() {
+    if (this.socket) {
+      this.socket.disconnect();
+    }
+  }
+
+  sendMessage(event: string, data: any) {
+    if (this.socket) {
+      this.socket.emit(event, data);
+    }
+  }
+
+  onMessage(event: string, callback: (data: any) => void) {
+    if (this.socket) {
+      this.socket.on(event, callback);
+    }
+  }
+}
+
+export default new SocketService();
