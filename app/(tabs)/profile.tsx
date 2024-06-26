@@ -19,6 +19,7 @@ import { colors, textStyles } from "@/assets/styles";
 import { useCallback, useEffect, useState } from "react";
 import { getUserInfoAPI } from "@/api/api";
 import { useFocusEffect } from "@react-navigation/native";
+import { Avatar } from "react-native-paper";
 
 const Profile = () => {
   const [user, setUser] = useState<UserResponseModel>();
@@ -27,36 +28,21 @@ const Profile = () => {
     const res = await getUserInfoAPI();
     setUser(res.data);
   };
-  useFocusEffect(
-    useCallback(() => {
-      getUserInfo();
-    }, [])
-  );
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
-        <View style={styles.avatarContainer}>
-          {user?.avatar ? (
-            <Image
-              source={{ uri: user?.avatar }}
-              style={styles.avatar}
-              resizeMode="cover"
-            />
-          ) : (
-            <Text style={styles.text}>
-              {user?.firstName.charAt(0).toUpperCase()}
-              {user?.lastName.charAt(0).toUpperCase()}
-            </Text>
-          )}{" "}
-        </View>
-
-        <InfoBox
-          title={user?.firstName + " " + user?.lastName}
-          subtitle={user?.email}
-          containerStyles="mt-5"
-          titleStyles="text-lg"
+        <Avatar.Text
+          size={48}
+          label={`${user?.firstName.charAt(0).toUpperCase()}${user?.lastName
+            .charAt(0)
+            .toUpperCase()}`}
         />
+        <Text style={{marginTop: 10, fontSize: 24}}>{user?.firstName + " " + user?.lastName}</Text>
+        <Text>{user?.email}</Text>
       </View>
     </SafeAreaView>
   );
@@ -64,7 +50,6 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#232533",
     height: "100%",
   },
   wrapper: {
@@ -75,6 +60,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 12,
     paddingHorizontal: 4,
+    color: "#ffff",
   },
   logoutContainer: {
     display: "flex",

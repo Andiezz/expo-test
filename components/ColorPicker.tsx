@@ -63,7 +63,7 @@ export default function CustomizeColorPicker({
 
   return (
     <View style={styles.container}>
-      <div style={styles.label}>
+      <View style={styles.label}>
         <Text>Color</Text>
         <TouchableOpacity
           onPress={() => setShowModal(true)}
@@ -74,7 +74,7 @@ export default function CustomizeColorPicker({
           }}
         />
         <Text>{color ? color : defaultColor}</Text>
-      </div>
+      </View>
 
       <Modal visible={showModal} animationType="slide">
         <Controller

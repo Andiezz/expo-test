@@ -63,7 +63,6 @@ const SignIn = () => {
   return (
     <AuthLayout>
       <ScreenContainer
-        backgroundColor={"#232533"}
         padding={0}
         addSafeAreaPadding={4}
       >
@@ -93,7 +92,7 @@ const SignIn = () => {
           />
           <AppText style={styles.error2}>
             {!!errorMessage && (
-              <div style={styles.error}>{JSON.stringify(errorMessage?.response?.message)}</div>
+              <View style={styles.error}>{JSON.stringify(errorMessage?.response?.message)}</View>
             )}
           </AppText>
           <View style={styles.forgotPasswordContainer}>

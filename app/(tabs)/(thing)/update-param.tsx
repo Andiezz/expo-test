@@ -1,5 +1,9 @@
 import { getThingDetailAPI, updateThingDetailAPI } from "@/api/api";
-import { IParameterStandardModel, IThingItem, IThingItemUpdate } from "@/api/types";
+import {
+  IParameterStandardModel,
+  IThingItem,
+  IThingItemUpdate,
+} from "@/api/types";
 import CustomizeColorPicker from "@/components/ColorPicker";
 import ParamField from "@/components/ParamField";
 import { router, useLocalSearchParams } from "expo-router";
@@ -116,14 +120,14 @@ const UpdateParam = () => {
         {thing && param && (
           <Card style={styles.card}>
             <Card.Content>
-              <div style={styles.cardTitle}>
+              <View style={styles.cardTitle}>
                 <Text
                   variant="bodyMedium"
                   style={{ color: "gray", marginVertical: 10 }}
                 >
                   Informations
                 </Text>
-              </div>
+              </View>
             </Card.Content>
             <Card style={styles.card} mode="contained">
               <Card.Content style={styles.cardContent}>
@@ -217,14 +221,14 @@ const UpdateParam = () => {
               </Card.Content>
             </Card>
             <Card.Content>
-              <div style={styles.cardTitle}>
+              <View style={styles.cardTitle}>
                 <Text
                   variant="bodyMedium"
                   style={{ color: "gray", marginVertical: 10 }}
                 >
                   Thresholds
                 </Text>
-              </div>
+              </View>
             </Card.Content>
             {param?.thresholds.map((item, index) => (
               <ParamField
@@ -255,7 +259,6 @@ const UpdateParam = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#232533",
     height: "100%",
     color: "white",
     padding: 10,

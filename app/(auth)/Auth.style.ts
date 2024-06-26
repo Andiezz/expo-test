@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginHorizontal: 40,
     borderBottomColor: colors.GrayAlt,
-    backgroundColor: "#232533",
     borderBottomWidth: 1,
   },
   inputError: {
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginHorizontal: 40,
     borderBottomColor: colors.Alternate3,
-    backgroundColor: "#232533",
     borderBottomWidth: 1,
   },
   forgotPasswordContainer: {

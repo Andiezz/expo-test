@@ -1,6 +1,6 @@
 import { IDevice } from "@/api/types";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   Card,
   Divider,
@@ -12,7 +12,7 @@ import {
 import { router } from "expo-router";
 
 interface DeviceProps {
-  thingId: string
+  thingId: string;
   device: IDevice;
   deviceIndex: number;
 }
@@ -25,41 +25,45 @@ const Device = ({ device, thingId, deviceIndex }: DeviceProps) => {
     <>
       <Card mode="outlined" key={device._id}>
         <Card.Content>
-          <div style={styles.device}>
-            <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+          <View style={styles.device}>
+            <View style={{ display: "flex", gap: 5, alignItems: "center" }}>
               <Text style={{ color: "gray" }}>Name</Text>
               <Text>{device.name}</Text>
-            </div>
-            <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+            </View>
+            <View style={{ display: "flex", gap: 5, alignItems: "center" }}>
               <Text style={{ color: "gray" }}>Model</Text>
               <Text>{device.model?.name}</Text>
-            </div>
-            <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+            </View>
+            <View style={{ display: "flex", gap: 5, alignItems: "center" }}>
               <Text style={{ color: "gray" }}>Default Parameter</Text>
               <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
-            </div>
+            </View>
             {!isSwitchOn ? (
               <>
                 <Divider />
                 {device.parameterStandards.map((item, index) => (
-                  <div
+                  <View
                     style={{ display: "flex", gap: 5, alignItems: "center" }}
                     key={index}
                   >
                     <Text>{item.name}</Text>
                     <IconButton
-                      onPress={() => router.push(`/update-param?thingId=${thingId}&paramIndex=${index}&deviceIndex=${deviceIndex}`)}
+                      onPress={() =>
+                        router.push(
+                          `/update-param?thingId=${thingId}&paramIndex=${index}&deviceIndex=${deviceIndex}`
+                        )
+                      }
                       icon="upload"
                       iconColor={"#65c1ff"}
                       size={20}
                     />
-                  </div>
+                  </View>
                 ))}
               </>
             ) : (
               <></>
             )}
-          </div>
+          </View>
         </Card.Content>
       </Card>
     </>

@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     paddingHorizontal: 12,
-    backgroundColor: "#232533",
+    backgroundColor: "#ffff",
   },
   input: {
     flex: 1,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     ...textStyles.BodyParagraphLargeRegular,
     color: colors.LightTextPrimary,
-    backgroundColor: "#232533",
+    backgroundColor: "#ffff",
   },
   error: {
     ...textStyles.BodyParagraphLargeRegular,

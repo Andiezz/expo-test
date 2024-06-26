@@ -63,7 +63,6 @@ const widthContent = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#232533",
     height: "100%",
     color: "white",
     padding: 10,

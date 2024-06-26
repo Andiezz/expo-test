@@ -1,9 +1,9 @@
 import { colors } from "@/assets/styles";
 import { View, Text, StyleSheet } from "react-native";
 
-const InfoBox = ({ title, subtitle, containerStyles, titleStyles }) => {
+const InfoBox = ({ title, subtitle}) => {
   return (
-    <View className={containerStyles}>
+    <View style={{marginTop: 20}}>
       <Text style={styles.textTitle}>
         {title}
       </Text>

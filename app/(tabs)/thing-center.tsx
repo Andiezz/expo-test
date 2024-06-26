@@ -72,7 +72,7 @@ const Thing = () => {
                       >
                         <DataTable.Row style={styles.tableRow}>
                           <DataTable.Cell style={styles.cell}>
-                            <div
+                            <View
                               style={{
                                 backgroundColor:
                                   item.status === STATUS.ACTIVE
@@ -85,30 +85,30 @@ const Thing = () => {
                                 paddingRight: 10,
                               }}
                             >
-                              • {item.status}
-                            </div>
+                              <Text> • {item.status}</Text>
+                            </View>
                           </DataTable.Cell>
                           <DataTable.Cell style={styles.cell}>
-                            <div
+                            <View
                               style={{
                                 display: "flex",
                                 flexDirection: "column",
-                                color: "black",
                               }}
                             >
                               <Text>{item.name}</Text>
-                              <Text
+                              <View
                                 style={{
                                   display: "flex",
                                   flexDirection: "row",
                                   alignItems: "center",
-                                  color: "#2b7ae8",
                                 }}
                               >
                                 <Icon size={10} source={icons.location} />
-                                {item.location.name}
-                              </Text>
-                            </div>
+                                <Text style={{ color: "#2b7ae8" }}>
+                                  {item.location.name}
+                                </Text>
+                              </View>
+                            </View>
                           </DataTable.Cell>
                           <DataTable.Cell style={styles.cell}>
                             {
@@ -161,7 +161,6 @@ const Thing = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#232533",
     height: "100%",
     color: "white",
   },

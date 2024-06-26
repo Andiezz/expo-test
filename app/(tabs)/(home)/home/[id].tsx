@@ -37,7 +37,7 @@ const Overview = () => {
             />
           </Card.Content>
         </Card>
-        <Card style={{marginHorizontal: 10, gap: 5}}>
+        <Card style={{ marginHorizontal: 10, gap: 5 }}>
           <Card.Title
             title={"Acceptable Subtances"}
             titleStyle={{ fontSize: 20, fontWeight: "bold" }}
@@ -65,7 +65,7 @@ const Overview = () => {
                         alignItems: "center",
                       }}
                     >
-                      {item.threshold.name}
+                      <Text>{item.threshold.name}</Text>
                     </View>
                   </View>
                 </View>
@@ -99,7 +99,7 @@ const Overview = () => {
                         alignItems: "center",
                       }}
                     >
-                      {item.threshold.name}
+                      <Text>{item.threshold.name}</Text>
                     </View>
                   </View>
                 </View>
@@ -114,7 +114,6 @@ const Overview = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#232533",
     height: "100%",
   },
   card: {

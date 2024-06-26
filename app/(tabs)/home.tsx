@@ -26,7 +26,6 @@ interface Message {
 
 const Home = () => {
   const [message, setMessage] = useState<Message | null>(null);
-  console.log("🚀 ~ Home ~ message:", message);
   const [thingList, setThingList] = useState<ThingResponseModel>();
 
   const userId = useSelector((state: RootState) => state.auth.userId);
@@ -40,31 +39,30 @@ const Home = () => {
     getThingList();
   }, [userId]);
 
-  useEffect(() => {
-    const connectSocket = async () => {
-      const token: any = await Storage.getItem(STORAGE_KEYS.token);
-      if (token) {
-        SocketService.connect(token.token);
-      }
+  // useEffect(() => {
+  //   const connectSocket = async () => {
+  //     const token: any = await Storage.getItem(STORAGE_KEYS.token);
+  //     if (token) {
+  //       SocketService.connect(token.token);
+  //     }
 
-      SocketService.onMessage("notification", (data: Message) => {
-        console.log("🚀 ~ SocketService.onMessage ~ data:", data);
-        setMessage(data);
-      });
+  //     SocketService.onMessage("notification", (data: Message) => {
+  //       console.log("🚀 ~ SocketService.onMessage ~ data:", data);
+  //       setMessage(data);
+  //     });
 
-      // Clean up the connection on unmount
-      return () => {
-        SocketService.disconnect();
-      };
-    };
-    connectSocket();
-  }, []);
+  //     // Clean up the connection on unmount
+  //     return () => {
+  //       SocketService.disconnect();
+  //     };
+  //   };
+  //   connectSocket();
+  // }, []);
 
   const sendMessage = () => {
     const msg: Message = {
       thingId: "Hello from Expo!",
     };
-    console.log("🚀 ~ sendMessage ~ msg:", msg);
     SocketService.sendMessage("notification", msg);
   };
 
@@ -101,7 +99,6 @@ const Home = () => {
             </Card>
           ))}
         </Card.Content>
-        <Button onPress={sendMessage}>click</Button>
         {/* <Card.Content>
           <Text>
             {message.toString()}
@@ -114,7 +111,6 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#232533",
     height: "100%",
   },
   card: {

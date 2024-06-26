@@ -3,7 +3,7 @@ import { IManager, IThingItem } from "@/api/types";
 import { STATUS } from "@/constants/constant";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Card, Text, Button, Avatar, Divider } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -47,14 +47,14 @@ const ThingDetail = () => {
           />
           <Divider style={{ marginVertical: 10 }} />
           <Card.Content>
-            <div style={styles.cardTitle}>
+            <View style={styles.cardTitle}>
               <Text
                 variant="bodyMedium"
                 style={{ color: "gray", marginVertical: 10 }}
               >
                 Location
               </Text>
-              <div
+              <View
                 style={{
                   backgroundColor:
                     thing?.status === STATUS.ACTIVE
@@ -68,50 +68,52 @@ const ThingDetail = () => {
                   alignItems: "center",
                 }}
               >
-                • {thing?.status}
-              </div>
-            </div>
+                <Text>• {thing?.status}</Text>
+              </View>
+            </View>
           </Card.Content>
           <Card style={styles.card} mode="contained">
             <Card.Content>
-              <div style={styles.locaionContainer}>
-                <div style={styles.location}>
+              <View style={styles.locaionContainer}>
+                <View style={styles.location}>
                   <Text variant="titleLarge">{thing?.location.name}</Text>
-                  <div style={{ display: "flex", flexDirection: "row" }}>
+                  <View style={{ display: "flex", flexDirection: "row" }}>
                     <Text>longtitude: </Text>
-                    <div style={styles.locationBadge}>
-                      <div style={styles.badge}>
-                        {thing?.location.longitude}
-                      </div>
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <View style={styles.locationBadge}>
+                      <View style={styles.badge}>
+                        <Text>{thing?.location.longitude}</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={{ display: "flex", flexDirection: "row" }}>
                     <Text>latitude: </Text>
-                    <div style={styles.locationBadge}>
-                      <div style={styles.badge}>{thing?.location.latitude}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                    <View style={styles.locationBadge}>
+                      <View style={styles.badge}>
+                        <Text>{thing?.location.latitude}</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
             </Card.Content>
           </Card>
           <Card.Content>
-            <div style={styles.cardTitle}>
+            <View style={styles.cardTitle}>
               <Text
                 variant="bodyMedium"
                 style={{ color: "gray", marginVertical: 10 }}
               >
                 Devices
               </Text>
-            </div>
+            </View>
           </Card.Content>
           <Card style={styles.card} mode="contained">
             <Card.Content>
-              <div style={styles.locaionContainer}>
+              <View style={styles.locaionContainer}>
                 {thing?.devices.map((item) => (
                   <Card mode="outlined" key={item._id}>
                     <Card.Content>
-                      <div style={styles.device}>
+                      <View style={styles.device}>
                         <Text
                           style={{
                             display: "flex",
@@ -121,7 +123,7 @@ const ThingDetail = () => {
                         >
                           {item.name}
                         </Text>
-                        <div
+                        <View
                           style={{
                             backgroundColor:
                               item?.status === STATUS.ACTIVE
@@ -135,13 +137,13 @@ const ThingDetail = () => {
                             alignItems: "center",
                           }}
                         >
-                          {item?.status}
-                        </div>
-                      </div>
+                          <Text>{item?.status}</Text>
+                        </View>
+                      </View>
                     </Card.Content>
                   </Card>
                 ))}
-              </div>
+              </View>
             </Card.Content>
           </Card>
           <Card.Actions>
@@ -157,7 +159,6 @@ const ThingDetail = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#232533",
     height: "100%",
     color: "white",
     padding: 10,

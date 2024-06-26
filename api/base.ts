@@ -21,7 +21,7 @@ declare module 'axios' {
   }
 }
 
-const Axios = axios.create({baseURL: "http://localhost:8888"});
+const Axios = axios.create({baseURL: "https://iot-platform-be.rinneyaws.cloud/"});
 
 const refreshTokenUrl = `http://localhost:8888/api/auth/refresh-token`;
 
@@ -107,14 +107,6 @@ const onRequest = async (axiosConfig: InternalAxiosRequestConfig) => {
     );
     setHeader(config, 'Access-Control-Allow-Origin', '*');
   }
-  // setHeader(config, 'x-app-id', 'purna')
-  // TODO: add timestamp for non-caching
-  // if (`${config.method}`.toLowerCase() === 'get' && !config?.params?.t) {
-  //   if (!config.params) {
-  //     config.params = {};
-  //   }
-  //   config.params.t = new Date().getTime();
-  // }
   return config;
 };
 
