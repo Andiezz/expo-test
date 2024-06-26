@@ -12,7 +12,7 @@ import { images } from "../../constants";
 import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
 import SocketService from "@/utility/socket";
 import SpeedometerChart from "@/components/Chart/SpeedometerChart";
-import { Card, Divider, Text } from "react-native-paper";
+import { Button, Card, Divider, Text } from "react-native-paper";
 import { getDashboardThingAPI, getThingListAPI } from "@/api/api";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
@@ -60,6 +60,14 @@ const Home = () => {
     connectSocket();
   }, []);
 
+  const sendMessage = () => {
+    const msg: Message = {
+      thingId: "Hello from Expo!",
+    };
+    console.log("🚀 ~ sendMessage ~ msg:", msg);
+    SocketService.sendMessage("notification", msg);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* <Card style={styles.card}>
@@ -86,13 +94,14 @@ const Home = () => {
               <Card.Content style={styles.thingContent}>
                 <View style={styles.thingTitle}>
                   <Text>
-                    {item.name} | {`ID: ${item._id}`}
+                    {item?.name} | {`ID: ${item._id}`}
                   </Text>
                 </View>
               </Card.Content>
             </Card>
           ))}
         </Card.Content>
+        <Button onPress={sendMessage}>click</Button>
         {/* <Card.Content>
           <Text>
             {message.toString()}

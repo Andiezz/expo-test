@@ -14,7 +14,15 @@ const ThingLayout = () => {
             headerStyle: { backgroundColor: "#161622" },
           }}
         />
-       
+       <Stack.Screen
+          name="home"
+          options={{
+            title: "Home",
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "white",
+            headerStyle: { backgroundColor: "#161622" },
+          }}
+        />
       </Stack>
     </>
   );
