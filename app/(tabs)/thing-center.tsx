@@ -35,6 +35,7 @@ const Thing = () => {
   useEffect(() => {
     getThingList();
   }, [pageSize, pageNumber, keyword, userId]);
+
   return (
     <SafeAreaView style={styles.container}>
       <PaperProvider>
@@ -61,8 +62,7 @@ const Thing = () => {
                   </DataTable.Title>
                 </DataTable.Header>
                 <ScrollView>
-                  {thingList?.paginatedResults &&
-                    thingList.paginatedResults?.map((item) => (
+                  {thingList?.paginatedResults?.map((item) => (
                       <Link
                         key={item._id}
                         href={{
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: 400,
-    padding: 10,
+    padding: 10
   },
   tableContainer: {
     justifyContent: "center",
@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
   },
   tableHeader: {
     backgroundColor: "#f9f9f9", // Background for the header row
+    color: "black",
   },
   header: {
     paddingHorizontal: 8, // Adjust padding as needed

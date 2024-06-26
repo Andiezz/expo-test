@@ -66,7 +66,7 @@ const Overview = () => {
           <Card.Content style={styles.thingWrapper}>
             {overview?.qualityReport?.iaqResult.acceptableSubstances.map(
               (item) => (
-                <View style={styles.resultWrapper}>
+                <View style={styles.resultWrapper} key={item.name}>
                   <Text style={{ flex: 2 }}>{item.name}</Text>
                   <Text style={{ flex: 1 }}>{item.value.toFixed(2)}</Text>
                   <View
@@ -100,7 +100,7 @@ const Overview = () => {
           <Card.Content style={styles.thingWrapper}>
             {overview?.qualityReport?.iaqResult.unAcceptableSubstances.map(
               (item) => (
-                <View style={styles.resultWrapper}>
+                <View style={styles.resultWrapper} key={item.name}>
                   <Text style={{ flex: 2 }}>{item.name}</Text>
                   <Text style={{ flex: 1 }}>{item.value.toFixed(2)}</Text>
                   <View

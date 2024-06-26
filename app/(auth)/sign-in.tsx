@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Link, router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState } from 'react';
+import { Link, router } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   View,
   Text,
@@ -9,33 +9,33 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-} from "react-native";
-import { images } from "../../constants";
+} from 'react-native';
+import { images } from '../../constants';
 // import { useGlobalContext } from "../../context/GlobalProvider";
-import { colors } from "@/assets/styles";
-import AuthLayout from "@/layouts/AuthLayout";
-import ScreenContainer from "@/layouts/ScreenContainer";
-import AppText from "@/components/AppText";
-import styles from "./Auth.style";
-import InputPassword from "@/components/InputPassword";
-import AppButton from "@/components/AppButton";
-import Input from "@/components/Input";
-import { forgotPasswordAPI, loginAPI } from "@/api/api";
-import { dispatch } from "@/store/store";
-import { loginAC } from "@/store/slices/auth";
-import logo from "@/assets/images/logo2.png"
-import { StackNavigationProp } from "@react-navigation/stack";
+import { colors } from '@/assets/styles';
+import AuthLayout from '@/layouts/AuthLayout';
+import ScreenContainer from '@/layouts/ScreenContainer';
+import AppText from '@/components/AppText';
+import styles from './Auth.style';
+import InputPassword from '@/components/InputPassword';
+import AppButton from '@/components/AppButton';
+import Input from '@/components/Input';
+import { forgotPasswordAPI, loginAPI } from '@/api/api';
+import { dispatch } from '@/store/store';
+import { loginAC } from '@/store/slices/auth';
+import logo from '@/assets/images/logo2.png';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const SignIn = () => {
   // const { setUser, setIsLogged } = useGlobalContext();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
   const [errorMessage, setErrorMessage] = useState<any>();
 
   const handleForgotPassword = async () => {
     try {
-      setErrorMessage("");
+      setErrorMessage('');
       setIsSubmitting(true);
       const res = await forgotPasswordAPI({ email: userName });
     } catch (error: any) {
@@ -53,7 +53,7 @@ const SignIn = () => {
         password: password,
       });
       dispatch(await loginAC(result.data));
-      router.push("/home");
+      router.push('/home');
     } catch (error: any) {
       setErrorMessage(error);
       setIsSubmitting(false);
@@ -62,10 +62,7 @@ const SignIn = () => {
 
   return (
     <AuthLayout>
-      <ScreenContainer
-        padding={0}
-        addSafeAreaPadding={4}
-      >
+      <ScreenContainer padding={0} addSafeAreaPadding={4}>
         <View style={styles.imageContainer}>
           <Image
             source={images.logo}
@@ -75,35 +72,37 @@ const SignIn = () => {
         </View>
         <View style={styles.phoneNumberContainer}>
           <Input
-            placeholder={"User Name"}
+            placeholder={'Username'}
             containerStyle={errorMessage ? styles.inputError : styles.input}
             value={userName}
             onChangeText={setUserName}
-            textAlign={"left"}
+            textAlign={'left'}
           />
         </View>
         <View style={styles.formContainer}>
           <InputPassword
-            placeholder={"Password"}
+            placeholder={'Password'}
             value={password}
             onChangeText={setPassword}
             containerStyle={errorMessage ? styles.inputError : styles.input}
-            textAlign={"left"}
+            textAlign={'left'}
           />
           <AppText style={styles.error2}>
             {!!errorMessage && (
-              <View style={styles.error}>{JSON.stringify(errorMessage?.response?.message)}</View>
+              <View style={styles.error}>
+                {<Text>{JSON.stringify(errorMessage?.response?.message)}</Text>}
+              </View>
             )}
           </AppText>
           <View style={styles.forgotPasswordContainer}>
             <TouchableOpacity onPress={handleForgotPassword}>
-              <AppText style={{color: 'white'}}>Forgot password?</AppText>
+              <AppText style={{ color: 'white' }}>Forgot password?</AppText>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.footerButtonContainer}>
           <AppButton
-            title={"Continue"}
+            title={'Login'}
             type="primary"
             buttonStyle={styles.signInButton}
             isSubmitting={isSubmitting}
