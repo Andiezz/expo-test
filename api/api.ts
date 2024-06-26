@@ -1,5 +1,6 @@
 import {
   CreateNewPasswordInputModel,
+  IOverviewDaily,
   IOverviewThing,
   IThingItem,
   ResponseDTO,
@@ -60,6 +61,9 @@ export const updateThingDetailAPI = async (thingId: string, data: IThingItem) =>
 
 export const getDashboardThingAPI = async (thingId: string) =>
   Axios.get<IOverviewThing>(`/api/dashboard/thing/${thingId}`);
+
+export const getDashboardDailyAPI = async (thingId: string) =>
+  Axios.get<IOverviewDaily[]>(`/api/dashboard/daily/${thingId}`);
 
 //#endregion
 

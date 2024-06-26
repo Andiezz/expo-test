@@ -1,28 +1,49 @@
-import { getDashboardThingAPI } from "@/api/api";
-import { IOverviewThing } from "@/api/types";
+import { getDashboardDailyAPI, getDashboardThingAPI } from "@/api/api";
+import { IOverviewDaily, IOverviewThing } from "@/api/types";
 import SpeedometerChart from "@/components/Chart/SpeedometerChart";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CurrentData from "./timeseries";
 
 const Overview = () => {
   const { id } = useLocalSearchParams();
   const [overview, setOverview] = useState<IOverviewThing>();
+  const [dataDaily, setDataDaily] = useState<IOverviewDaily[] | undefined>();
 
   const getThingDetail = async () => {
     const res = await getDashboardThingAPI(id?.toString() || "");
     setOverview(res.data);
   };
 
+  const getDataDaily = async () => {
+    const res = await getDashboardDailyAPI(id?.toString() || "");
+    setDataDaily(res.data);
+  };
   useEffect(() => {
     getThingDetail();
+    getDataDaily();
   }, [id]);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <Card>
+          <Card.Title
+            title={"Timeseries Data"}
+            titleStyle={{ fontSize: 20, fontWeight: "bold" }}
+          />
+          <Card.Content>
+            <CurrentData
+              data={dataDaily && dataDaily[0]}
+              arrayTimes={Object.values(
+                dataDaily && dataDaily[0] ? dataDaily[0] : ({} as IOverviewDaily)
+              ).filter((value) => value !== null && value !== undefined)}
+            />
+          </Card.Content>
+        </Card>
         <Card style={styles.card}>
           <Card.Title
             title={"Thing Warning"}
