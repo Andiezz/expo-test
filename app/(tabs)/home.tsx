@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import { ThingResponseModel } from "@/api/types";
 import { router } from "expo-router";
 import { Storage, STORAGE_KEYS } from "@/utility/storage";
+import { textStyles } from "@/assets/styles";
 
 interface Message {
   thingId: string;
@@ -35,6 +36,7 @@ const Home = () => {
       setThingList(res.data);
     }
   };
+
   useEffect(() => {
     getThingList();
   }, [userId]);
@@ -87,11 +89,12 @@ const Home = () => {
             <Card
               key={item._id}
               mode="outlined"
-              onPress={() => router.push(`/home/${item._id}`)}
+              onPress={() => router.push(`/home/${item._id?.toString()}`)}
+              style={styles.thingWrapper}
             >
               <Card.Content style={styles.thingContent}>
                 <View style={styles.thingTitle}>
-                  <Text>
+                  <Text style={styles.title} numberOfLines={1}>
                     {item?.name} | {`ID: ${item._id}`}
                   </Text>
                 </View>
@@ -115,7 +118,8 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: 10,
-    height: 250,
+    padding: 10,
+    display: "flex",
   },
   thingWrapper: {
     display: "flex",
@@ -125,15 +129,17 @@ const styles = StyleSheet.create({
   thingContent: {
     display: "flex",
     flexDirection: "column",
-    gap: 10,
   },
   thingTitle: {
     display: "flex",
     backgroundColor: "#4095e5",
-    padding: 5,
+    padding: 10,
     borderRadius: 5,
-    width: "90%",
   },
+  title: {
+    fontSize: 14,
+    fontWeight: "bold",
+  }
 });
 
 export default Home;

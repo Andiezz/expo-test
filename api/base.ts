@@ -23,7 +23,7 @@ declare module 'axios' {
 
 const Axios = axios.create({baseURL: "https://iot-platform-be.rinneyaws.cloud/"});
 
-const refreshTokenUrl = `http://localhost:8888/api/auth/refresh-token`;
+const refreshTokenUrl = `https://iot-platform-be.rinneyaws.cloud/api/auth/refresh-token`;
 
 const defaultConfig: AxiosRequestConfig = {
   __auth: true,

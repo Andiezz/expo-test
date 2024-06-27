@@ -39,6 +39,7 @@ const Thing = () => {
   useEffect(() => {
     getThingList();
   }, [pageSize, pageNumber, keyword, userId]);
+
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>

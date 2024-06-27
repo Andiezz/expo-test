@@ -55,8 +55,8 @@ const ParamField = ({
                 ?.thresholds?.[thresholdIndex]?.name && (
                 <Text style={styles.errorText}>
                   {
-                    errors.devices[deviceIndex].parameterStandards[paramIndex]
-                      .thresholds[thresholdIndex].name.message
+                    errors?.devices?.[deviceIndex]?.parameterStandards?.[paramIndex]
+                      ?.thresholds?.[thresholdIndex]?.name?.message
                   }
                 </Text>
               )}
@@ -94,8 +94,8 @@ const ParamField = ({
                 ?.thresholds?.[thresholdIndex]?.min && (
                 <Text style={styles.errorText}>
                   {
-                    errors.devices[deviceIndex].parameterStandards[paramIndex]
-                      .thresholds[thresholdIndex].min.message
+                    errors?.devices?.[deviceIndex]?.parameterStandards?.[paramIndex]
+                    ?.thresholds?.[thresholdIndex]?.min?.message
                   }
                 </Text>
               )}
@@ -120,8 +120,8 @@ const ParamField = ({
                 ?.thresholds?.[thresholdIndex]?.max && (
                 <Text style={styles.errorText}>
                   {
-                    errors.devices[deviceIndex].parameterStandards[paramIndex]
-                      .thresholds[thresholdIndex].max.message
+                    errors?.devices?.[deviceIndex]?.parameterStandards?.[paramIndex]
+                    ?.thresholds?.[thresholdIndex]?.max?.message
                   }
                 </Text>
               )}

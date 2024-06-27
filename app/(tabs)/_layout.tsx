@@ -214,12 +214,13 @@ const iconStyles = StyleSheet.create({
     gap: 2,
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 24,
+    height: 24,
   },
   textFocused: {
-    fontSize: 15,
+    fontSize: 12,
     lineHeight: 16,
   },
 });
+
 export default TabLayout;
