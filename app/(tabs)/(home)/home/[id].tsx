@@ -30,7 +30,7 @@ const Overview = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Card>
+        <Card style={{ margin: 10}}>
           <Card.Title
             title={"Timeseries Data"}
             titleStyle={{ fontSize: 20, fontWeight: "bold" }}
@@ -58,7 +58,7 @@ const Overview = () => {
             />
           </Card.Content>
         </Card>
-        <Card style={{ marginHorizontal: 10, gap: 5 }}>
+        <Card style={{ margin: 10, gap: 5 }}>
           <Card.Title
             title={"Acceptable Subtances"}
             titleStyle={{ fontSize: 20, fontWeight: "bold" }}

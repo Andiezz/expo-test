@@ -10,7 +10,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import {
   Badge,
+  Button,
+  Card,
   DataTable,
+  Divider,
   Icon,
   PaperProvider,
   Text,
@@ -19,6 +22,7 @@ import { textStyles } from "@/assets/styles";
 import { icons } from "@/constants";
 import { Link, router, Stack } from "expo-router";
 import moment from "moment";
+import { Ionicons } from "@expo/vector-icons";
 
 const Thing = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -36,167 +40,162 @@ const Thing = () => {
     getThingList();
   }, [pageSize, pageNumber, keyword, userId]);
   return (
-    <SafeAreaView style={styles.container}>
-      <PaperProvider>
-        <View style={styles.tableContainer}>
-          <View style={styles.tableWrapper}>
-            <ScrollView horizontal>
-              <DataTable style={styles.table}>
-                <DataTable.Header style={styles.tableHeader}>
-                  <DataTable.Title style={styles.header}>
-                    Status
-                  </DataTable.Title>
-                  <DataTable.Title style={styles.header}>
-                    Thing/Location
-                  </DataTable.Title>
-                  <DataTable.Title style={styles.header}>Owner</DataTable.Title>
-                  <DataTable.Title style={styles.header}>
-                    Manager
-                  </DataTable.Title>
-                  <DataTable.Title style={styles.header}>
-                    Devices
-                  </DataTable.Title>
-                  <DataTable.Title style={styles.header}>
-                    Created Date
-                  </DataTable.Title>
-                </DataTable.Header>
-                <ScrollView>
-                  {thingList?.paginatedResults &&
-                    thingList.paginatedResults?.map((item) => (
-                      <Link
-                        key={item._id}
-                        href={{
-                          pathname: "/thing/[id]",
-                          params: { id: `${item._id}` },
-                        }}
-                      >
-                        <DataTable.Row style={styles.tableRow}>
-                          <DataTable.Cell style={styles.cell}>
-                            <View
-                              style={{
-                                backgroundColor:
-                                  item.status === STATUS.ACTIVE
-                                    ? "#55adff"
-                                    : item.status === STATUS.INACTIVE
-                                    ? "#bababa"
-                                    : "#ffd23d",
-                                borderRadius: 20,
-                                paddingLeft: 10,
-                                paddingRight: 10,
-                              }}
-                            >
-                              <Text> • {item.status}</Text>
-                            </View>
-                          </DataTable.Cell>
-                          <DataTable.Cell style={styles.cell}>
-                            <View
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                              }}
-                            >
-                              <Text>{item.name}</Text>
-                              <View
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <Icon size={10} source={icons.location} />
-                                <Text style={{ color: "#2b7ae8" }}>
-                                  {item.location.name}
-                                </Text>
-                              </View>
-                            </View>
-                          </DataTable.Cell>
-                          <DataTable.Cell style={styles.cell}>
-                            {
-                              item.managers.find(
-                                (item) => item.isOwner === true
-                              )?.firstName
-                            }{" "}
-                            {
-                              item.managers.find(
-                                (item) => item.isOwner === true
-                              )?.lastName
-                            }
-                          </DataTable.Cell>
-                          <DataTable.Cell style={styles.cell}>
-                            {item.managers
-                              .filter((item) => item.isOwner === false)
-                              .join(", ")}
-                          </DataTable.Cell>
-                          <DataTable.Cell style={styles.cell}>
-                            {item.devices.map((item) => item.name).join(", ")}
-                          </DataTable.Cell>
-                          <DataTable.Cell style={styles.cell}>
-                            {moment(item.createdOn).format(
-                              " hh:mm:ss MMMM DD, YYYY"
-                            )}
-                          </DataTable.Cell>
-                        </DataTable.Row>
-                      </Link>
-                    ))}
-                </ScrollView>
-                {/* <DataTable.Pagination
-          page={page}
-          numberOfPages={Math.ceil(items.length / itemsPerPage)}
-          onPageChange={(page) => setPage(page)}
-          label={`${from + 1}-${to} of ${items.length}`}
-          numberOfItemsPerPageList={numberOfItemsPerPageList}
-          numberOfItemsPerPage={itemsPerPage}
-          onItemsPerPageChange={onItemsPerPageChange}
-          showFastPaginationControls
-          selectPageDropdownLabel={"Rows per page"}
-        /> */}
-              </DataTable>
-            </ScrollView>
-          </View>
-        </View>
-      </PaperProvider>
-    </SafeAreaView>
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        {thingList?.paginatedResults &&
+          thingList?.paginatedResults.map((item) => (
+            <Card key={item._id} style={styles.card} mode="contained">
+              <Card.Content>
+                <View style={styles.cardHeader}>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 5,
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <Text style={{ fontSize: 30, fontWeight: "bold" }}>
+                      {item.name}
+                    </Text>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Ionicons name="location" size={16} color="#2b7ae8" />
+                      <Text style={{ color: "#2b7ae8" }}>
+                        {item.location.name}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor:
+                        item.status === STATUS.ACTIVE
+                          ? "#55adff"
+                          : item.status === STATUS.INACTIVE
+                          ? "#bababa"
+                          : "#ffd23d",
+                      borderRadius: 20,
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                    }}
+                  >
+                    <Text> • {item.status}</Text>
+                  </View>
+                </View>
+              </Card.Content>
+              <Divider style={{ margin: 10, height: 2 }} />
+              <Card.Content
+                style={{ marginVertical: 10, display: "flex", gap: 10 }}
+              >
+                <View style={styles.infomation}>
+                  <Text style={[styles.text, { color: "gray" }]}>Owner: </Text>
+                  <Text style={styles.text}>
+                    {
+                      item.managers.find((item) => item.isOwner === true)
+                        ?.firstName
+                    }{" "}
+                    {
+                      item.managers.find((item) => item.isOwner === true)
+                        ?.lastName
+                    }
+                  </Text>
+                </View>
+                <View style={styles.infomation}>
+                  <Text style={[styles.text, { color: "gray" }]}>
+                    Managers:{" "}
+                  </Text>
+                  <Text style={styles.text}>
+                    {item.managers
+                      .filter((item) => item.isOwner === false)
+                      .join(", ")}
+                  </Text>
+                </View>
+                <View style={styles.infomation}>
+                  <Text style={[styles.text, { color: "gray" }]}>
+                    Devices:{" "}
+                  </Text>
+                  <Text style={styles.text}>
+                    {item.devices.map((item) => item.name).join(", ")}
+                  </Text>
+                </View>
+                <View style={styles.infomation}>
+                  <Text style={[styles.text, { color: "gray" }]}>
+                    CreateAt:{" "}
+                  </Text>
+                  <Text style={styles.text}>
+                    {moment(item.createdOn).format(" hh:mm:ss MMMM DD, YYYY")}
+                  </Text>
+                </View>
+              </Card.Content>
+              <Card.Actions>
+                <Button onPress={() => router.push(`/thing/${item._id}`)}>
+                  See Detail
+                </Button>
+              </Card.Actions>
+            </Card>
+          ))}
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 15,
     height: "100%",
     color: "white",
-  },
-  title: {
-    color: "white",
-    fontSize: 24,
-    fontWeight: 400,
     padding: 10,
   },
-  tableContainer: {
+  card: {
+    marginHorizontal: 10,
+  },
+  cardHeader: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  infomation: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 5,
+  },
+  text: {
+    fontSize: 20,
+  },
+  location: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 5,
+  },
+  device: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 5,
+  },
+  locationBadge: {
+    display: "flex",
+    alignItems: "center",
     justifyContent: "center",
-    paddingTop: 16,
-    borderRadius: 10,
-    width: "auto",
+    backgroundColor: "#4ed6ed",
+    borderRadius: 30,
+    color: "#fff",
   },
-  tableWrapper: {
-    borderRadius: 10,
-    overflow: "hidden", // Ensures children respect the border radius
-    marginHorizontal: 16,
-  },
-  table: {
-    backgroundColor: "white", // Background for the table
-  },
-  tableHeader: {
-    backgroundColor: "#f9f9f9", // Background for the header row
-  },
-  header: {
-    paddingHorizontal: 8, // Adjust padding as needed
-    minWidth: 100, // Minimum width for cells to prevent content truncation
-  },
-  tableRow: {
-    backgroundColor: "white", // Background for each row
-  },
-  cell: {
-    paddingHorizontal: 8, // Adjust padding as needed
-    width: 200, // Minimum width for cells to prevent content truncation
+  badge: {
+    display: "flex",
+    paddingLeft: 5,
+    paddingRight: 5,
   },
 });
 export default Thing;

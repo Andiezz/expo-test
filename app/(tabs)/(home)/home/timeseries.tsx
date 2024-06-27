@@ -3,6 +3,7 @@ import OverviewPointWidget from "@/components/OverviewWidget";
 import { TextTimeseries, BackgroupColor, Color } from "@/constants/constant";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, Card } from "react-native-paper";
 
 export interface IProps {
   data?: IOverviewDaily;
@@ -136,24 +137,18 @@ const CurrentData: React.FC<IProps> = ({ data, arrayTimes }) => {
             {renderTimeseries(data)}
           </View>
           {arrayTimes.length > 5 && (
-            <View style={{ width: "100%" }}>
-              <View>
+            <View>
+              <Card.Actions>
                 {more ? (
-                  <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => setMore(false)}
-                  >
-                    <Text>Show more</Text>
-                  </TouchableOpacity>
+                  <Button mode="outlined" onPress={() => setMore(false)}>
+                    Show more
+                  </Button>
                 ) : (
-                  <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => setMore(true)}
-                  >
-                    <Text>Show less</Text>
-                  </TouchableOpacity>
+                  <Button mode="outlined" onPress={() => setMore(true)}>
+                    Show less
+                  </Button>
                 )}
-              </View>
+              </Card.Actions>
             </View>
           )}
         </View>

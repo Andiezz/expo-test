@@ -1,4 +1,5 @@
 import { icons } from "@/constants";
+import { MaterialIcons } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Icon } from "react-native-paper";
 
@@ -23,7 +24,7 @@ const OverviewPointWidget: React.FC<IOverviewPointWidget> = ({
           <View style={styles.wrapper}>
             <View>
               <View style={[styles.img, { backgroundColor: `${backgroud}` }]}>
-                <Icon source={icons.lighting} size={24} />
+                <MaterialIcons name="offline-bolt" size={20} color={color} />
               </View>
             </View>
             <View style={styles.infomation}>
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   infomation: {
     display: "flex",
     flexWrap: "nowrap",
-    width: 80
+    width: 80,
   },
   param: {
     width: "90%",
