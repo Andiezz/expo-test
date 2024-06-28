@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import "react-native-url-polyfill/auto";
 import { SplashScreen, Stack } from "expo-router";
@@ -7,6 +7,11 @@ import { SplashScreen, Stack } from "expo-router";
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ISocketService } from "@/utility/socket";
+import { getUserInfoAPI } from "@/api/api";
+import useService from "@/utility/use-service";
+import { UserResponseModel } from "@/api/types";
+import { Storage, STORAGE_KEYS } from "@/utility/storage";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -43,13 +48,13 @@ const RootLayout = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* <GlobalProvider> */}
-        <Provider store={store}>
-          <Stack>
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-          </Stack>
-        </Provider>
+      <Provider store={store}>
+        <Stack>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+        </Stack>
+      </Provider>
       {/* </GlobalProvider> */}
     </GestureHandlerRootView>
   );

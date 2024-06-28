@@ -10,16 +10,20 @@ import {
 
 import { images } from "../../constants";
 import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
-import SocketService from "@/utility/socket";
 import SpeedometerChart from "@/components/Chart/SpeedometerChart";
 import { Button, Card, Divider, Text } from "react-native-paper";
-import { getDashboardThingAPI, getThingListAPI } from "@/api/api";
+import {
+  getDashboardThingAPI,
+  getThingListAPI,
+  getUserInfoAPI,
+} from "@/api/api";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-import { ThingResponseModel } from "@/api/types";
+import { ThingResponseModel, UserResponseModel } from "@/api/types";
 import { router } from "expo-router";
 import { Storage, STORAGE_KEYS } from "@/utility/storage";
-import { textStyles } from "@/assets/styles";
+import { ISocketService } from "@/utility/socket";
+import useService from "@/utility/use-service";
 
 interface Message {
   thingId: string;
@@ -28,6 +32,7 @@ interface Message {
 const Home = () => {
   const [message, setMessage] = useState<Message | null>(null);
   const [thingList, setThingList] = useState<ThingResponseModel>();
+  const [token, setToken] = useState<any>();
 
   const userId = useSelector((state: RootState) => state.auth.userId);
   const getThingList = async () => {
@@ -36,10 +41,11 @@ const Home = () => {
       setThingList(res.data);
     }
   };
-
   useEffect(() => {
     getThingList();
   }, [userId]);
+
+  
 
   // useEffect(() => {
   //   const connectSocket = async () => {
@@ -60,13 +66,6 @@ const Home = () => {
   //   };
   //   connectSocket();
   // }, []);
-
-  const sendMessage = () => {
-    const msg: Message = {
-      thingId: "Hello from Expo!",
-    };
-    SocketService.sendMessage("notification", msg);
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -89,12 +88,11 @@ const Home = () => {
             <Card
               key={item._id}
               mode="outlined"
-              onPress={() => router.push(`/home/${item._id?.toString()}`)}
-              style={styles.thingWrapper}
+              onPress={() => router.push(`/home/${item._id}`)}
             >
               <Card.Content style={styles.thingContent}>
                 <View style={styles.thingTitle}>
-                  <Text style={styles.title} numberOfLines={1}>
+                  <Text>
                     {item?.name} | {`ID: ${item._id}`}
                   </Text>
                 </View>
@@ -118,8 +116,7 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: 10,
-    padding: 10,
-    display: "flex",
+    height: 250,
   },
   thingWrapper: {
     display: "flex",
@@ -129,17 +126,15 @@ const styles = StyleSheet.create({
   thingContent: {
     display: "flex",
     flexDirection: "column",
+    gap: 10,
   },
   thingTitle: {
     display: "flex",
     backgroundColor: "#4095e5",
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
+    width: "90%",
   },
-  title: {
-    fontSize: 14,
-    fontWeight: "bold",
-  }
 });
 
 export default Home;

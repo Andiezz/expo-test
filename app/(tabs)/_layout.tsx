@@ -9,6 +9,17 @@ import { useSelector } from "react-redux";
 import { Badge, IconButton } from "react-native-paper";
 import LogoutButton from "@/components/LogoutButton";
 import { logoutAC } from "@/store/slices/auth";
+import { getNotificationAPI, getUserInfoAPI } from "@/api/api";
+import { ResponseNotification, UserResponseModel } from "@/api/types";
+import { ISocketService } from "@/utility/socket";
+import { Storage, STORAGE_KEYS } from "@/utility/storage";
+import useService from "@/utility/use-service";
+import { useState, useEffect } from "react";
+import {
+  ALERT_TYPE,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
 
 interface IconProps {
   icon: any;
@@ -43,9 +54,57 @@ const TabLayout = () => {
     (state: RootState) => state.auth.isUserLoggedIn
   );
   if (!isAuthenticated) return <Redirect href="/sign-in" />;
+  const [token, setToken] = useState<any>();
+  const [notification, setNotification] = useState<ResponseNotification>();
+  const [user, setUser] = useState<UserResponseModel>();
+  const [message, setMessage] = useState<any>(null);
+
+  const socketService: ISocketService = useService("socketService");
+
+  const getUserInfo = async () => {
+    const res = await getUserInfoAPI();
+    setUser(res.data);
+  };
+
+  useEffect(() => {
+    if (message) {
+      Toast.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Warning",
+        textBody: "Parameters in warning threshold",
+      });
+    }
+  }, [message]);
+
+  useEffect(() => {
+    getUserInfo();
+    const getToken = async () => {
+      const token: any = await Storage.getItem(STORAGE_KEYS.token);
+      setToken(token);
+    };
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    if (user && token) {
+      socketService.authToken = token?.token;
+      socketService.connect();
+      console.log(`/notification/${user.id}`);
+      socketService.subscribeEvent(
+        `/notification/${user.id}`,
+        (messageData) => {
+          console.log("messageData", messageData);
+          setMessage(messageData);
+        }
+      );
+    }
+    return () => {
+      socketService.dispose();
+    };
+  }, [user, token]);
 
   return (
-    <>
+    <AlertNotificationRoot>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: "#FFA001",
@@ -91,11 +150,6 @@ const TabLayout = () => {
             ),
             headerRight: () => (
               <View style={{ position: "relative" }}>
-                <Badge
-                  style={{ position: "absolute", top: 5, right: 5, zIndex: 10 }}
-                >
-                  3
-                </Badge>
                 <IconButton
                   onPress={() => router.push("/notification")}
                   icon={"bell"}
@@ -123,11 +177,6 @@ const TabLayout = () => {
             ),
             headerRight: () => (
               <View style={{ position: "relative" }}>
-                <Badge
-                  style={{ position: "absolute", top: 5, right: 5, zIndex: 10 }}
-                >
-                  3
-                </Badge>
                 <IconButton
                   onPress={() => router.push("/notification")}
                   icon={"bell"}
@@ -156,16 +205,6 @@ const TabLayout = () => {
             headerRight: () => (
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <View style={{ position: "relative" }}>
-                  <Badge
-                    style={{
-                      position: "absolute",
-                      top: 5,
-                      right: 5,
-                      zIndex: 10,
-                    }}
-                  >
-                    3
-                  </Badge>
                   <IconButton
                     onPress={() => router.push("/notification")}
                     icon={"bell"}
@@ -199,7 +238,7 @@ const TabLayout = () => {
 
       {/* <Loader isLoading={loading} /> */}
       <StatusBar backgroundColor="#161622" style="light" />
-    </>
+    </AlertNotificationRoot>
   );
 };
 
